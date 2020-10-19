@@ -11,10 +11,16 @@
   "author": "Phan Kiet",
   "license": "ISC",
   "devDependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "@types/lodash": "^4.14.162",
     "@types/ws": "^7.2.7",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
-    "tslint": "^5.20.1"
+    "lodash": "^4.17.20",
+    "node-fetch": "^2.6.1",
+    "popyt": "^4.1.2",
+    "tslint": "^5.20.1",
+    "ytdl-core-discord": "^1.2.3"
   },
   "dependencies": {
     "typescript": "^4.0.3"
