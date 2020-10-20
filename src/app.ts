@@ -12,7 +12,6 @@ import { isEmpty } from 'lodash';
 import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
 import { YouTube } from 'popyt';
 import axios from 'axios';
-import { request } from 'http';
 
 const PORT = process.env.PORT || undefined;
 
@@ -190,17 +189,10 @@ if (PORT)
 
 async function keepAlive()
 {
-    setInterval(() =>
+    setInterval(async () =>
     {
         const url = `https://${process.env.APP_NAME}.herokuapp.com`;
 
-        request(url,
-        {
-            headers:
-            {
-                "Content-Type": "application/json"
-            },
-            method: "GET"
-        })
+        await axios.get(url);
     }, 19 * 60 * 1000);
 }
