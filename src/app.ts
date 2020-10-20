@@ -109,14 +109,14 @@ const __main__ = () =>
                 {
                     type: 'opus'
                 })
-                .on("finished", () =>
+                .on("finish", async () =>
                 {
-                    message.channel.send("Nothing else to play, imma head out");
+                    await message.channel.send("Nothing else to play, imma head out");
                     channel.leave();
                 })
-                .on("error", (err : Error) =>
+                .on("error", async (err : Error) =>
                 {
-                    message.channel.send("Something bad happened, please try again.");
+                    await message.channel.send("Something bad happened, please try again.");
                     console.log(err);
                 });
 
