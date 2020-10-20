@@ -12,6 +12,7 @@ import { isEmpty } from 'lodash';
 import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
 import { YouTube } from 'popyt';
 import axios from 'axios';
+import { request } from 'http';
 
 const PORT = process.env.PORT || undefined;
 
@@ -173,7 +174,8 @@ const __express__ = () =>
 
     app.get("/", (req: Request, res: Response) =>
     {
-        res.send("This is a non-coding discord bot.");
+        const day: Date = new Date();
+        res.send(day);
     });
 
     app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
@@ -188,10 +190,17 @@ if (PORT)
 
 async function keepAlive()
 {
-    setInterval(async () =>
+    setInterval(() =>
     {
         const url = `https://${process.env.APP_NAME}.herokuapp.com`;
 
-        await axios.get(url);
+        request(url,
+        {
+            headers:
+            {
+                "Content-Type": "application/json"
+            },
+            method: "GET"
+        })
     }, 19 * 60 * 1000);
 }
