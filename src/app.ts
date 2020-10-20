@@ -10,8 +10,6 @@ dotenv.config();
 import { isEmpty } from 'lodash';
 
 import { Video, YouTube } from 'popyt';
-import { request } from 'http';
-
 
 const PORT = process.env.PORT || undefined;
 
@@ -180,5 +178,4 @@ __main__();
 if (PORT)
 {
     __express__();
-    
 }
