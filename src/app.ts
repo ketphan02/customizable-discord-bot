@@ -36,7 +36,9 @@ const __main__ = () =>
 
     app.on('message', async (message) =>
     {
-        if (!message.author.bot && message.content.startsWith(process.env.PREFIX))
+        if (message.author.bot) return;
+
+        if (message.content.startsWith(process.env.PREFIX))
         {
             const data = message.content.trim().substring(1).toLowerCase();
 
@@ -105,7 +107,14 @@ const __main__ = () =>
 
                         playlist.push(await youtube.getVideo(url));
 
-                        connection.play(await ytdl(url), {type: 'opus'});
+                        connection.play(await ytdl(url))
+                        .on("finished", () =>
+                        {
+                            message.channel.send("Nothing else to play, imma head out");
+                            channel.leave();
+                        })
+                        .on("error", err => console.log(err));
+                        
 
                         await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}}...`);
                     }
@@ -168,7 +177,7 @@ const __express__ = () =>
 
     app.get("/", (req: Request, res: Response) =>
     {
-        setInterval(() => res.send("This is a non-coding discord bot."), 1000 * 60 * 20);
+        res.send("This is a non-coding discord bot.");
     });
 
     app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
