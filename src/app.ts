@@ -13,6 +13,8 @@ import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
 import { YouTube } from 'popyt';
 import axios from 'axios';
 
+import schedule from 'node-schedule';
+
 const PORT = process.env.PORT || undefined;
 
 const __main__ = () =>
@@ -189,10 +191,8 @@ if (PORT)
 
 async function keepAlive()
 {
-    setInterval(async () =>
+    await schedule.scheduleJob('* /10 * * * *', () =>
     {
-        const url = `https://${process.env.APP_NAME}.herokuapp.com`;
-
-        await axios.get(url);
-    }, 19 * 60 * 1000);
+        console.log("I know, you know, we all know.");
+    });
 }
