@@ -99,8 +99,8 @@ const __main__ = () =>
                 song_choose = false;
                 if ("1" <= data && data <= process.env.NUMBER_OF_YOUTUBE_VIDS)
                 {
-                    try
-                    {
+                    // try
+                    // {
                         const url = `https://youtube.com/watch?v=${vids[parseInt(data) - 1].id}`;
 
                         await message.react(process.env.OK_SYMBOL);
@@ -117,11 +117,11 @@ const __main__ = () =>
                         
 
                         await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}}...`);
-                    }
-                    catch
-                    {
-                        await message.channel.send("Something bad happened, please try again.");
-                    }
+                    // }
+                    // catch
+                    // {
+                    //     await message.channel.send("Something bad happened, please try again.");
+                    // }
                 }
                 else
                 {
