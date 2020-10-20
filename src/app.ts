@@ -39,8 +39,6 @@ const __main__ = () =>
         if (message.author.bot) return;
         if (! message.content.startsWith(process.env.PREFIX)) return;
 
-        console.log(message.guild.id);
-
         const data = message.content.trim().substring(1).toLowerCase();
 
         if (data.startsWith(process.env.COMMAND_PLAY))
@@ -100,33 +98,29 @@ const __main__ = () =>
             song_choose = false;
             if ("1" <= data && data <= process.env.NUMBER_OF_YOUTUBE_VIDS)
             {
-                // try
-                // {
-                    const url = `https://youtube.com/watch?v=${vids[parseInt(data) - 1].id}`;
+                const url = `https://youtube.com/watch?v=${vids[parseInt(data) - 1].id}`;
 
-                    await message.react(process.env.OK_SYMBOL);
+                await message.react(process.env.OK_SYMBOL);
 
-                    playlist.push(await youtube.getVideo(url));
+                playlist.push(await youtube.getVideo(url));
 
-                    connection.play(
-                    await ytdl(url),
-                    {
-                        type: 'opus'
-                    })
-                    .on("finished", () =>
-                    {
-                        message.channel.send("Nothing else to play, imma head out");
-                        channel.leave();
-                    })
-                    .on("error", err => console.log(err));
-                    
+                connection.play(
+                await ytdl(url),
+                {
+                    type: 'opus'
+                })
+                .on("finished", async () =>
+                {
+                    await message.channel.send("Nothing else to play, imma head out");
+                    channel.leave();
+                })
+                .on("error", async (err : Error) =>
+                {
+                    await message.channel.send("Something bad happened, please try again.");
+                    console.log(err);
+                });
 
-                    await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}}...`);
-                // }
-                // catch
-                // {
-                //     await message.channel.send("Something bad happened, please try again.");
-                // }
+                await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}}...`);
             }
             else
             {
