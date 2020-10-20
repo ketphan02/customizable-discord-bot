@@ -9,11 +9,10 @@ dotenv.config();
 
 import { isEmpty } from 'lodash';
 
-import { Video, YouTube } from 'popyt';
+import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
+import { YouTube } from 'popyt';
 
 const PORT = process.env.PORT || undefined;
-
-
 
 const __main__ = () =>
 {
@@ -22,10 +21,10 @@ const __main__ = () =>
 
     let song_choose = false;
     let song_pause = false;
-    let vids: Video[];
-    let playlist: Video[] = [];
+    let playlist: any[] = [];
     let connection: Discord.VoiceConnection;
     let channel: Discord.VoiceChannel;
+    let vids: Video[];
 
     app.login(process.env.DISCORD_TOKEN);
     
@@ -70,7 +69,7 @@ const __main__ = () =>
 
             if (!isEmpty(query))
             {
-                vids = (await youtube.searchVideos(query,  parseInt(process.env.NUMBER_OF_YOUTUBE_VIDS))).results;
+                vids = await scrapeYt.search(query, {type: "video", limit: parseInt(process.env.NUMBER_OF_YOUTUBE_VIDS)});
 
                 if (isEmpty(vids))
                 {
@@ -98,12 +97,11 @@ const __main__ = () =>
             song_choose = false;
             if ("1" <= data && data <= process.env.NUMBER_OF_YOUTUBE_VIDS)
             {
-                const url = `https://youtube.com/watch?v=${vids[parseInt(data) - 1].id}`;
-
                 await message.react(process.env.OK_SYMBOL);
 
-                playlist.push(await youtube.getVideo(url));
+                playlist.push(await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
 
+                const url = `https://youtube.com/watch?v=${playlist[0].id}`;
                 connection.play(
                 await ytdl(url),
                 {
@@ -112,6 +110,7 @@ const __main__ = () =>
                 .on("finish", async () =>
                 {
                     await message.channel.send("Nothing else to play, imma head out");
+                    playlist.shift();
                     channel.leave();
                 })
                 .on("error", async (err : Error) =>
@@ -120,7 +119,7 @@ const __main__ = () =>
                     console.log(err);
                 });
 
-                await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}}...`);
+                await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}...`);
             }
             else
             {

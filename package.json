@@ -25,6 +25,7 @@
     "lodash": "^4.17.20",
     "node-fetch": "^2.6.1",
     "popyt": "^4.1.2",
+    "scrape-yt": "^1.4.3",
     "tslint": "^5.20.1",
     "typescript": "^4.0.3",
     "ytdl-core-discord": "^1.2.3"
