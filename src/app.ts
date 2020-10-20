@@ -107,7 +107,11 @@ const __main__ = () =>
 
                         playlist.push(await youtube.getVideo(url));
 
-                        connection.play(await ytdl(url))
+                        connection.play(
+                        await ytdl(url),
+                        {
+                            type: 'opus'
+                        })
                         .on("finished", () =>
                         {
                             message.channel.send("Nothing else to play, imma head out");
@@ -157,8 +161,6 @@ const __main__ = () =>
                     }
                 }
             }
-
-            console.log(song_choose);
         }
     });
 
