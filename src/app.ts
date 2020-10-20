@@ -1,12 +1,20 @@
 import Discord, { Channel, Client, Emoji } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
 
+import express, {Request, Response} from 'express';
+import bodyParser from 'body-parser';
+
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { isEmpty } from 'lodash';
 
 import { Video, YouTube } from 'popyt';
+
+
+const PORT = process.env.PORT || undefined;
+
+
 
 const __main__ = () =>
 {
@@ -152,4 +160,20 @@ const __main__ = () =>
     });
 }
 
+const __express__ = () =>
+{
+    const app = express();
+
+    app.use(bodyParser.json());
+    app.use(express.urlencoded({ extended: false}));
+
+    app.get("/", (req: Request, res: Response) =>
+    {
+        res.send("This is a non-coding discord bot.");
+    });
+
+    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+}
+
 __main__();
+if (PORT) __express__();
