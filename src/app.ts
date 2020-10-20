@@ -10,6 +10,7 @@ dotenv.config();
 import { isEmpty } from 'lodash';
 
 import { Video, YouTube } from 'popyt';
+import { request } from 'http';
 
 
 const PORT = process.env.PORT || undefined;
@@ -169,11 +170,15 @@ const __express__ = () =>
 
     app.get("/", (req: Request, res: Response) =>
     {
-        res.send("This is a non-coding discord bot.");
+        setInterval(() => res.send("This is a non-coding discord bot."), 1000 * 60 * 20);
     });
 
     app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
 }
 
 __main__();
-if (PORT) __express__();
+if (PORT)
+{
+    __express__();
+    
+}
