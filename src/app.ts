@@ -163,10 +163,12 @@ const __main__ = () =>
 
 const keepAlive = () =>
 {
-    schedule.scheduleJob('* /10 * * * *', () =>
+    setInterval(async () =>
     {
-        console.log("I know, you know, we all know.");
-    });
+        const url = `https://${process.env.APP_NAME}.herokuapp.com`
+        await fetch(url);
+        console.log("Fetching...");
+    }, 5 * 60 * 1000);
 }
 
 const __hosting__ = () =>
