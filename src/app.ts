@@ -6,6 +6,9 @@ dotenv.config();
 
 import { isEmpty } from 'lodash';
 
+import express from 'express';
+import bodyParser from 'body-parser';
+
 import scrapeYt, { Video } from 'scrape-yt';
 
 import schedule from 'node-schedule';
@@ -158,7 +161,7 @@ const __main__ = () =>
     });
 }
 
-function keepAlive()
+const keepAlive = () =>
 {
     schedule.scheduleJob('* /10 * * * *', () =>
     {
@@ -166,6 +169,26 @@ function keepAlive()
     });
 }
 
+const __hosting__ = () =>
+{
+    const app = express();
+    app.use(bodyParser.json());
+    app.use(express.urlencoded({ extended: false}));
+
+    app.get('/', (req, res) =>
+    {
+        res.send("Hello");
+    });
+
+    // Start the server
+    app.listen(port, () => console.log(`Server is started`));
+
+}
+
+const port = process.env.PORT || undefined;
+
+if (port) __hosting__();
 __main__();
 keepAlive();
+
 
