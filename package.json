@@ -27,5 +27,8 @@
   },
   "dependencies": {
     "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
