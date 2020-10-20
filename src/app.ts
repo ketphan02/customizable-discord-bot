@@ -1,26 +1,18 @@
 import Discord, { Channel, Client, Emoji } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
 
-import express, {Request, Response} from 'express';
-import bodyParser from 'body-parser';
-
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { isEmpty } from 'lodash';
 
-import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
-import { YouTube } from 'popyt';
-import axios from 'axios';
+import scrapeYt, { Video } from 'scrape-yt';
 
 import schedule from 'node-schedule';
-
-const PORT = process.env.PORT || undefined;
 
 const __main__ = () =>
 {
     const app: Client = new Client();
-    const youtube: YouTube = new YouTube(process.env.YOUTUBE_TOKEN);
 
     let song_choose = false;
     let song_pause = false;
@@ -166,33 +158,14 @@ const __main__ = () =>
     });
 }
 
-const __express__ = () =>
+function keepAlive()
 {
-    const app = express();
-
-    app.use(bodyParser.json());
-    app.use(express.urlencoded({ extended: false}));
-
-    app.get("/", (req: Request, res: Response) =>
-    {
-        const day: Date = new Date();
-        res.send(day);
-    });
-
-    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
-}
-
-__main__();
-if (PORT)
-{
-    __express__();
-    keepAlive();
-}
-
-async function keepAlive()
-{
-    await schedule.scheduleJob('* /10 * * * *', () =>
+    schedule.scheduleJob('* /10 * * * *', () =>
     {
         console.log("I know, you know, we all know.");
     });
 }
+
+__main__();
+keepAlive();
+
