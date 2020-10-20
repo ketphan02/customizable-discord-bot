@@ -11,6 +11,7 @@ import { isEmpty } from 'lodash';
 
 import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
 import { YouTube } from 'popyt';
+import axios from 'axios';
 
 const PORT = process.env.PORT || undefined;
 
@@ -182,4 +183,15 @@ __main__();
 if (PORT)
 {
     __express__();
+    keepAlive();
+}
+
+async function keepAlive()
+{
+    setInterval(async () =>
+    {
+        const url = `https://${process.env.APP_NAME}.herokuapp.com`;
+
+        await axios.get(url);
+    }, 19 * 60 * 1000);
 }
