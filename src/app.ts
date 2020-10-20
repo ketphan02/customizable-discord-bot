@@ -11,7 +11,7 @@ import bodyParser from 'body-parser';
 
 import scrapeYt, { Video } from 'scrape-yt';
 
-import schedule from 'node-schedule';
+import fetch from 'node-fetch';
 
 const __main__ = () =>
 {
