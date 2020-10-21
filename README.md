@@ -9,3 +9,7 @@
     - Procfile ⟶ Set the command for Heroku hosting.
 - Info file
     - README<span>.</span>md ⟶ This file, which let people understand what is in this project.
+
+## Deploy
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ketphan02/customizable-discord-bot)
