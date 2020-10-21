@@ -14,7 +14,7 @@
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ketphan02/customizable-discord-bot)
 
 ## Environment variables
-    Note that all the variable must be assigned in Config Vars under Settings tab in Heroku.
+    Note that all the variables must be assigned in Config Vars under Settings tab in Heroku.
 | Variable name | Example Value |
 | ------------- | ------------- |
 | APP_NAME | discord-music-bot-eg |
