@@ -29,8 +29,34 @@
 | SAD_SYMBOL | 😢 |
 | THINK_SYMBOL | 🤔 |
 
-You can customize these values by your preference. For this set of variable, we will have the following commands:<br/>
-    - Play command:
-    ``` !play SONG-NAME ``` (This will return some songs for you to choose and you can use ``!index-of-the-song-you-want`` to select). <br/>
-
-
+You can customize these values by your preference. For this set of variable, we will have the following commands:
+### Play command
+- Syntax
+    ```
+    !play SONG-NAME
+    ```
+- Example
+    ```
+    !play Hello Lionel Richie
+    ```
+### Select song command
+- The command above will return a set of songs for us to choose, we can choose one of them by using
+    ```
+    !index-of-the-song-you-want
+    ```
+- Example
+    ```
+    !1
+    ```
+### Stop command
+```
+!stop
+```
+### Pause command
+```
+!pause
+```
+### Resume command
+```
+!resume
+```
