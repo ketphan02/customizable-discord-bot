@@ -1,0 +1,7 @@
+{
+    "name": "DiscordTS",
+    "description": "A Discord Music Bot Template",
+    "repository": "https://github.com/ketphan02/customizable-discord-bot",
+    "logo": "https://drive.google.com/file/d/1mGNEd0oKfhbw6RWAzDKP3Ex09gnyMbFb/view?usp=sharing",
+    "keywords": ["node", "express", "discord"]
+  }

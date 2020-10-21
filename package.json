@@ -9,7 +9,7 @@
     "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["node", "express", "discord"],
   "author": "Phan Kiet",
   "license": "ISC",
   "dependencies": {
@@ -33,5 +33,11 @@
   "engines": {
     "node": "12.x",
     "npm": "6.x"
-  }
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/ketphan02/customizable-discord-bot.git"
+  },
+  "homepage": "https://github.com/ketphan02/customizable-discord-bot"
 }
