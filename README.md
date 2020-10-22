@@ -15,9 +15,9 @@
 
 ## Environment variables
     Note that all the variables must be assigned in Config Vars under Settings tab in Heroku.
-| Variable name | Example Value |
+| Variable name | Default Value |
 | ------------- | ------------- |
-| APP_NAME | discord-music-bot-eg |
+| APP_NAME |  |
 | DISCORD_TOKEN |  |
 | COMMAND_PLAY | play |
 | COMMAND_PAUSE | pause |
