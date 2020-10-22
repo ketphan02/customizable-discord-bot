@@ -130,6 +130,7 @@ const __main__ = () =>
             catch
             {
                 await message.channel.send("This song is not available");
+                channel.leave();
             }
         }
         else
