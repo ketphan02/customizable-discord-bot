@@ -92,37 +92,44 @@ const __main__ = () =>
         }
         else if (song_choose)
         {
-            song_choose = false;
-            if ("1" <= data && data <= process.env.NUMBER_OF_YOUTUBE_VIDS || "4")
+            try
             {
-                await message.react(process.env.OK_SYMBOL || "👌");
-
-                playlist.push(await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
-
-                const url = `https://youtube.com/watch?v=${playlist[0].id}`;
-                connection.play(
-                await ytdl(url),
+                song_choose = false;
+                if ("1" <= data && data <= process.env.NUMBER_OF_YOUTUBE_VIDS || "4")
                 {
-                    type: 'opus'
-                })
-                .on("finish", async () =>
-                {
-                    await message.channel.send("Nothing else to play, imma head out");
-                    playlist.shift();
-                    channel.leave();
-                })
-                .on("error", async (err : Error) =>
-                {
-                    await message.channel.send("Something bad happened, please try again.");
-                    console.log(err);
-                });
+                    await message.react(process.env.OK_SYMBOL || "👌");
 
-                await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}...`);
+                    playlist.push(await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
+
+                    const url = `https://youtube.com/watch?v=${playlist[0].id}`;
+                    connection.play(
+                    await ytdl(url),
+                    {
+                        type: 'opus'
+                    })
+                    .on("finish", async () =>
+                    {
+                        await message.channel.send("Nothing else to play, imma head out");
+                        playlist.shift();
+                        channel.leave();
+                    })
+                    .on("error", async (err : Error) =>
+                    {
+                        await message.channel.send("Something bad happened, please try again.");
+                        console.log(err);
+                    });
+
+                    await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}...`);
+                }
+                else
+                {
+                    await message.react(process.env.THINK_SYMBOL || "🤔");
+                    await message.channel.send(`Bro ???`);
+                }
             }
-            else
+            catch
             {
-                await message.react(process.env.THINK_SYMBOL || "🤔");
-                await message.channel.send(`Bro ???`);
+                await message.channel.send("This song is not available");
             }
         }
         else
