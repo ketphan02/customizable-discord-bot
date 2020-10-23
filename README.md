@@ -20,6 +20,7 @@
 | APP_NAME |  |
 | DISCORD_TOKEN |  |
 | COMMAND_PLAY | play |
+| COMMAND_SKIP | skip |
 | COMMAND_PAUSE | pause |
 | COMMAND_RESUME | resume |
 | COMMAND_STOP | stop |
@@ -51,6 +52,10 @@ You can customize these values by your preference. For this set of variable, we 
 ### Stop command
 ```
 !stop
+```
+### Stop command
+```
+!skip
 ```
 ### Pause command
 ```
