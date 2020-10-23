@@ -101,23 +101,33 @@ const __main__ = () =>
 
                     playlist.push(await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
 
-                    const url = `https://youtube.com/watch?v=${playlist[0].id}`;
-                    connection.play(
-                    await ytdl(url),
+                    const playSongs = async () =>
                     {
-                        type: 'opus'
-                    })
-                    .on("finish", async () =>
-                    {
-                        await message.channel.send("Nothing else to play, imma head out");
-                        playlist.shift();
-                        channel.leave();
-                    })
-                    .on("error", async (err : Error) =>
-                    {
-                        await message.channel.send("Something bad happened, please try again.");
-                        console.log(err);
-                    });
+                        if (playlist.length == 0)
+                        {
+                            await message.channel.send("Nothing else to play, imma head out");
+                            channel.leave();
+                            return;
+                        }
+                        const url = `https://youtube.com/watch?v=${playlist[0].id}`;
+                        connection.play(
+                        await ytdl(url),
+                        {
+                            type: 'opus'
+                        })
+                        .on("finish", async () =>
+                        {
+                            await playlist.shift();
+                            await playSongs();
+                        })
+                        .on("error", async (err : Error) =>
+                        {
+                            await message.channel.send("Something bad happened, please try again.");
+                            console.log(err);
+                            await playlist.shift();
+                            await playSongs();
+                        });
+                    }
 
                     await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}...`);
                 }
