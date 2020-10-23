@@ -188,9 +188,9 @@ const __main__ = () =>
     app.on('voiceStateUpdate', async (voiceState) =>
     {
         const channel = voiceState.channel;
-        const members = voiceState.member;
+        const members = voiceState.guild.members;
 
-        console.log(voiceState);
+        console.log(members);
     });
 
     app.on('error', () =>
