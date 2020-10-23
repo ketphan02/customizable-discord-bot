@@ -190,7 +190,7 @@ const __main__ = () =>
         const channel = voiceState.channel;
         const members = voiceState.guild.members;
 
-        console.log(members);
+        console.log(channel.members);
     });
 
     app.on('error', () =>
