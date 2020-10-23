@@ -23,6 +23,8 @@ const __main__ = () =>
     let connection: Discord.VoiceConnection;
     let channel: Discord.VoiceChannel;
     let vids: Video[];
+    let isPeopleInVoice = false;
+    let music_channel = null;
 
     app.login(process.env.DISCORD_TOKEN);
     
@@ -186,12 +188,17 @@ const __main__ = () =>
     });
 
     app.on('voiceStateUpdate', async (voiceState) =>
-    {
-        const channel = voiceState.channel;
-        
+    {        
         if (channel)
         {
-            console.log(channel.members);
+            isPeopleInVoice = true;
+            console.log(channel);
+        }
+        else if (isPeopleInVoice && !channel)
+        {
+            connection.dispatcher.pause(true);
+            song_pause = true;
+            channel.leave();
         }
     });
 
