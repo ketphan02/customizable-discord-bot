@@ -140,9 +140,9 @@ const __main__ = () =>
                     await message.channel.send(`Bro ???`);
                 }
             }
-            catch
+            catch (error)
             {
-                await message.channel.send("This song is not available");
+                await message.channel.send("This song is not available due to " + error);
                 channel.leave();
             }
         }
