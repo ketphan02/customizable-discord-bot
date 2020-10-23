@@ -189,17 +189,8 @@ const __main__ = () =>
 
     app.on('voiceStateUpdate', async (voiceState) =>
     {        
-        if (channel)
-        {
-            isPeopleInVoice = true;
-            console.log(channel);
-        }
-        else if (isPeopleInVoice && !channel)
-        {
-            connection.dispatcher.pause(true);
-            song_pause = true;
-            channel.leave();
-        }
+        if (!channel) console.log("NO");
+        else if (channel) console.log("YES");
     });
 
     app.on('error', () =>
