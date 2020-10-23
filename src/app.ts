@@ -190,7 +190,7 @@ const __main__ = () =>
         const channel = voiceState.channel;
         const members = voiceState.member;
 
-        console.log(members);
+        console.log(voiceState);
     });
 
     app.on('error', () =>
