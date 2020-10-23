@@ -9,7 +9,7 @@ import { isEmpty } from 'lodash';
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import scrapeYt, { Video } from 'scrape-yt';
+import scrapeYt, { Video, VideoDetailed } from 'scrape-yt';
 
 import fetch from 'node-fetch';
 
@@ -99,7 +99,8 @@ const __main__ = () =>
                 {
                     await message.react(process.env.OK_SYMBOL || "👌");
 
-                    playlist.push(await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
+                    playlist.push( await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
+                    await message.channel.send(`Pushing ${vids[parseInt(data) - 1].title} into the queue`);
 
                     const playSongs = async () =>
                     {
@@ -110,6 +111,9 @@ const __main__ = () =>
                             return;
                         }
                         const url = `https://youtube.com/watch?v=${playlist[0].id}`;
+
+                        await message.channel.send(`Now playing ${playlist[0].title}...`);
+
                         connection.play(
                         await ytdl(url),
                         {
@@ -129,7 +133,6 @@ const __main__ = () =>
                         });
                     }
 
-                    await message.channel.send(`Now playing ${vids[parseInt(data) - 1].title}...`);
                 }
                 else
                 {
