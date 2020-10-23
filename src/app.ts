@@ -132,6 +132,8 @@ const __main__ = () =>
                             await playSongs();
                         });
                     }
+                    
+                    if (playlist.length === 1) await playSongs();
 
                 }
                 else
