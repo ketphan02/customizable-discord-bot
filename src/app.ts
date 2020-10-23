@@ -38,6 +38,38 @@ const __main__ = () =>
 
         const data = message.content.trim().substring(1).toLowerCase();
 
+        const playSongs = async () =>
+        {
+            if (playlist.length == 0)
+            {
+                await message.channel.send("Nothing else to play, imma head out");
+                channel.leave();
+                return;
+            }
+            const url = `https://youtube.com/watch?v=${playlist[0].id}`;
+
+            await message.channel.send(`Now playing ${playlist[0].title}...`);
+
+            connection.play(
+            await ytdl(url),
+            {
+                type: 'opus'
+            })
+            .on("finish", async () =>
+            {
+                await playlist.shift();
+                await playSongs();
+            })
+            .on("error", async (err : Error) =>
+            {
+                await message.channel.send("Something bad happened, please try again.");
+                console.log(err);
+                await playlist.shift();
+                await playSongs();
+            });
+        }
+
+
         if (data.startsWith(process.env.COMMAND_PLAY || "play"))
         {
             channel = message.member.voice.channel;
@@ -101,37 +133,6 @@ const __main__ = () =>
 
                     playlist.push( await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
                     await message.channel.send(`Pushing ${vids[parseInt(data) - 1].title} into the queue`);
-
-                    const playSongs = async () =>
-                    {
-                        if (playlist.length == 0)
-                        {
-                            await message.channel.send("Nothing else to play, imma head out");
-                            channel.leave();
-                            return;
-                        }
-                        const url = `https://youtube.com/watch?v=${playlist[0].id}`;
-
-                        await message.channel.send(`Now playing ${playlist[0].title}...`);
-
-                        connection.play(
-                        await ytdl(url),
-                        {
-                            type: 'opus'
-                        })
-                        .on("finish", async () =>
-                        {
-                            await playlist.shift();
-                            await playSongs();
-                        })
-                        .on("error", async (err : Error) =>
-                        {
-                            await message.channel.send("Something bad happened, please try again.");
-                            console.log(err);
-                            await playlist.shift();
-                            await playSongs();
-                        });
-                    }
                     
                     if (playlist.length === 1) await playSongs();
 
@@ -155,6 +156,12 @@ const __main__ = () =>
                 await message.react(process.env.SAD_SYMBOL || "😢");
                 connection.dispatcher.end();
                 channel.leave();
+            }
+            else if (data.startsWith(process.env.COMMAND_SKIP || "skip"))
+            {
+                await message.react(process.env.OK_SYMBOL || "👌");
+                await playlist.shift();
+                await playSongs();
             }
             else if (data.startsWith(process.env.COMMAND_PAUSE || "pause"))
             {
