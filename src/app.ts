@@ -185,6 +185,14 @@ const __main__ = () =>
         }
     });
 
+    app.on('voiceStateUpdate', async (voiceState) =>
+    {
+        const channel = voiceState.channel;
+        const members = voiceState.member;
+
+        console.log(members);
+    });
+
     app.on('error', () =>
     {
         console.log("Error!\nError!\nError!");
