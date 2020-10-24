@@ -148,7 +148,6 @@ const __main__ = () =>
             catch (error)
             {
                 await message.channel.send("This song is not available due to " + error);
-                channel.leave();
             }
         }
         else
