@@ -1,4 +1,4 @@
-import Discord, { Channel, Client, Emoji } from 'discord.js';
+import Discord, { Client } from 'discord.js';
 import ytdl from 'ytdl-core-discord';
 
 import * as dotenv from 'dotenv';
@@ -23,8 +23,6 @@ const __main__ = () =>
     let connection: Discord.VoiceConnection;
     let channel: Discord.VoiceChannel;
     let vids: Video[];
-    let isPeopleInVoice = false;
-    let music_channel = null;
 
     app.login(process.env.DISCORD_TOKEN);
     
@@ -126,6 +124,8 @@ const __main__ = () =>
         }
         else if (song_choose)
         {
+            let isPushed = false;
+
             try
             {
                 song_choose = false;
@@ -134,6 +134,7 @@ const __main__ = () =>
                     await message.react(process.env.OK_SYMBOL || "👌");
 
                     playlist.push( await scrapeYt.getVideo(vids[parseInt(data) - 1].id));
+                    isPushed = true;
                     await message.channel.send(`Pushing ${vids[parseInt(data) - 1].title} into the queue`);
                     
                     if (playlist.length === 1) await playSongs();
@@ -148,6 +149,7 @@ const __main__ = () =>
             catch (error)
             {
                 await message.channel.send("This song is not available due to " + error);
+                if (isPushed) playlist.shift();
             }
         }
         else
